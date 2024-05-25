@@ -18,6 +18,9 @@ class PDSVRPInstance:
         self.Q_d = values["DRONE CAP"] #drone capacity
         self.T_t = values["TRUCK TIME LIMIT"] #max time truck
         self.T_d = values["DRONE TIME LIMIT"] #max time drones
+
+        self.coordinates = coordinates
+        
         self.w = weights #weights vector
         
     def load_instance(self, file_path):
