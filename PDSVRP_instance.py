@@ -20,7 +20,7 @@ class PDSVRPInstance:
         self.T_d = values["DRONE TIME LIMIT"] #max time drones
         self.w = weights #weights vector
         
-    def load_instance(file_path):
+    def load_instance(self, file_path):
         with open(file_path, 'r') as file:
             lines = file.readlines()
     
@@ -47,7 +47,7 @@ class PDSVRPInstance:
 
         return values, coordinates, weights
     
-    def distance_matrix_computation(coord):
+    def distance_matrix_computation(self, coord):
         coord_array = np.array(coord)
         return distance_matrix(coord_array, coord_array)
     
