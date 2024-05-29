@@ -12,12 +12,14 @@ class PDSVRPInstance:
         self.N = len(weights) #number of nodes
         self.h = values["NUM TRUCKS"] #number of trucks
         self.distances= self.distance_matrix_computation(coordinates) #matrix of distances
-        self.t_t = self.distances/values["TRUCK SPEED"] #matrix of trucks travel times
+        self.manhattan_distances = self.manhattan_distance_matrix_computation(coordinates)
+        self.t_t = self.distances/values["TRUCK SPEED"] #matrix of trucks travel times#########################
         self.t_d =self.distances[0]/values["DRONE SPEED"] #vector of drones travel times
         self.Q_t = values["TRUCK CAP"] #truck capacity
         self.Q_d = values["DRONE CAP"] #drone capacity
         self.T_t = values["TRUCK TIME LIMIT"] #max time truck
         self.T_d = values["DRONE TIME LIMIT"] #max time drones
+        self.d_end = values["DRONE ENDURANCE"]
 
         self.t_speed = values["TRUCK SPEED"]
         self.d_speed = values["DRONE SPEED"]
@@ -56,6 +58,17 @@ class PDSVRPInstance:
     def distance_matrix_computation(self, coord):
         coord_array = np.array(coord)
         return distance_matrix(coord_array, coord_array)
+    
+    def manhattan_distance_matrix_computation(self, coord):
+        coord_array = np.array(coord)
+        num_points = coord_array.shape[0]
+        manhattan_dist_matrix = np.zeros((num_points, num_points))
+        
+        for i in range(num_points):
+            for j in range(num_points):
+                manhattan_dist_matrix[i, j] = np.sum(np.abs(coord_array[i] - coord_array[j]))
+        
+        return manhattan_dist_matrix
     
     def get_params(self):
         return [self.C_T, self.C_D, self.D, self.N, self.h, self.distances, self.t_t, self.t_d, self.Q_t, self.Q_d, self.T_t, self.T_d, self.w]
