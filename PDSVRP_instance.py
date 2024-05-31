@@ -13,8 +13,8 @@ class PDSVRPInstance:
         self.h = values["NUM TRUCKS"] #number of trucks
         self.distances= self.distance_matrix_computation(coordinates) #matrix of distances
         self.manhattan_distances = self.manhattan_distance_matrix_computation(coordinates)
-        self.t_t = self.manhattan_distances/values["TRUCK SPEED"] #matrix of trucks travel times
-        self.t_d =self.distances[0]/values["DRONE SPEED"] #vector of drones travel times
+        self.t_t = (self.manhattan_distances)/(values["TRUCK SPEED"]) #matrix of trucks travel times
+        self.t_d = self.distances[0]/values["DRONE SPEED"] #vector of drones travel times
         self.Q_t = values["TRUCK CAP"] #truck capacity
         self.Q_d = values["DRONE CAP"] #drone capacity
         self.T_t = values["TRUCK TIME LIMIT"] #max time truck
