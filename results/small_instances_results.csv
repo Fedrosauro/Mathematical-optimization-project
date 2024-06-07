@@ -1,0 +1,2 @@
+instance,cost_solver,cost_heuristic,cost_heuristic_initial,cost_difference_percentage,time_solver,time_heuristic,drone_eligible_customers,customers_served_by_drones,trucks_used
+30-r-2-e,103.99980356635137,235.25378629122153,236.73078968743593,126.20599099606062,26.610000133514404,366.2624046802521,17,13,2
