@@ -1,2 +1,2 @@
-instance,cost_solver,cost_heuristic,cost_heuristic_initial,cost_difference_percentage,time_solver,time_heuristic,drone_eligible_customers,customers_served_by_drones,trucks_used
-30-c-1-e,99.19357825333975,172.49273530968927,173.00914552927995,73.89506291339137,3600.0299999713898,2020.6476032733917,20,11,2
+instance,cost_solver,cost_heuristic,cost_difference_percentage,cost_heuristic_initial,time_solver,time_heuristic,drone_eligible_customers,customers_served_by_drones,trucks_used,iter_imp,iter_max
+20-c-1-c,13.116409821898186,13.116409821898186,0.0,61.90885310100767,0.11600017547607422,70.87116265296936,18,16,1,100,1000
