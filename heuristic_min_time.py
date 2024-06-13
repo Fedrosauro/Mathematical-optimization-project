@@ -2,6 +2,7 @@ import random
 import copy
 import utilities as u
 import heuristic as h
+import time
 
 #First modification implemented: best position computation
 def recreate_min_time(instance, solution, w1, w2, w3, w4, w5, gamma):
@@ -76,19 +77,30 @@ def local_search_min_time(instance, solution, n_nearest):
                         t_2_x = u.truck_tour_time(instance.t_t, copy.deepcopy(new_solution[0][neighbor_pos[0]][neighbor_pos[1]]))
                         
                         if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
+                            print("performed 2_opt_x")
+                            print(f'neighbor: {neighbor}, customer: {customer}')
+                            print(new_solution[0])
+                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
+
 
                     else: 
                         new_solution = u.relocate(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
+                            print("performed relocate")
+                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                         new_solution = u.swap(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
+                            print("performed swap")
+                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                         new_solution = u._2_opt(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
+                            print("performed _2_opt")
+                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                 else:
@@ -101,16 +113,22 @@ def local_search_min_time(instance, solution, n_nearest):
                     t_2_x = u.drone_tour_time(instance.t_d, copy.deepcopy(new_solution[0][neighbor_pos[0]][neighbor_pos[1]]))
 
                     if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
+                        print("performed swap_x")
+                        print(new_solution[0])
+                        time.sleep(0.05)
                         return local_search_min_time(instance, new_solution, n_nearest)
 
 
             t_old_truck_tour = u.truck_tour_time(instance.t_t, copy.deepcopy(solution[0][0][i]))
 
             new_solution = u.shift_t(instance, copy.deepcopy(solution), customer, i)
-            new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0])) #new_customer_pos contiene la pos del customer che è stato spostato dal truck tour al drone tour
+            new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0]))
             t_new_drone_tour = u.drone_tour_time(instance.t_d, copy.deepcopy(new_solution[0][new_customer_pos[0]][new_customer_pos[1]]))
             
-            if (t_new_drone_tour < t_old_truck_tour and new_customer_pos[0] != 0):
+            if (u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)) and new_customer_pos[0] != 0):
+                print("performed shift_t")
+                print(new_solution[0])
+                time.sleep(0.05)
                 return local_search_min_time(instance, new_solution, n_nearest)
 
     for i in range(len(solution[0][1])):
@@ -123,14 +141,23 @@ def local_search_min_time(instance, solution, n_nearest):
             new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0])) #new_customer_pos contiene la pos del customer che è stato spostato dal drone tour al truck tour
             t_new_truck_tour = u.truck_tour_time(instance.t_t, copy.deepcopy(new_solution[0][new_customer_pos[0]][new_customer_pos[1]]))
             
-            if (t_new_truck_tour < t_old_drone_tour and new_customer_pos[0] != 1):
+            if (u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)) and new_customer_pos[0] != 1):
+                print("performed shift_d")
+                print(new_solution[0])
+                time.sleep(0.05)
                 return local_search_min_time(instance, new_solution, n_nearest)
 
     return solution
 
+def initial_solution_construction_min_time(instance, w1, w2, w3, w4, w5, gamma, n_nearest):
+    A = [c for c in range (1, instance.N)]
+    solution = recreate_min_time(instance, [[[[] for _ in range(instance.h)], [[] for _ in range(instance.D)]],A], w1, w2, w3, w4, w5, gamma)
+    solution = local_search_min_time(instance, solution, n_nearest)
+    return solution
+
 #Third modification implemented: threshold acceptance considering total completion time
 def SISSRs_min_time(instance, sigma, c_average_removed, L_max, w1, w2, w3, w4, w5, gamma, n_nearest, delta, epsilon, iter_imp, iter_max, p_min, p_max, max_unfeasible_swaps_perturb):
-    s_0 = h.initial_solution_construction(instance, w1, w2, w3, w4, w5, gamma, n_nearest)
+    s_0 = initial_solution_construction_min_time(instance, w1, w2, w3, w4, w5, gamma, n_nearest)
     s_curr = s_0
     s_best = s_0
     iterations_without_improvement = 0
