@@ -77,30 +77,21 @@ def local_search_min_time(instance, solution, n_nearest):
                         t_2_x = u.truck_tour_time(instance.t_t, copy.deepcopy(new_solution[0][neighbor_pos[0]][neighbor_pos[1]]))
                         
                         if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
-                            print("performed 2_opt_x")
-                            print(f'neighbor: {neighbor}, customer: {customer}')
-                            print(new_solution[0])
-                            time.sleep(0.05)
+    
                             return local_search_min_time(instance, new_solution, n_nearest)
 
 
                     else: 
                         new_solution = u.relocate(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
-                            print("performed relocate")
-                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                         new_solution = u.swap(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
-                            print("performed swap")
-                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                         new_solution = u._2_opt(instance, copy.deepcopy(solution), customer, neighbor, i)
                         if u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)):
-                            print("performed _2_opt")
-                            time.sleep(0.05)
                             return local_search_min_time(instance, new_solution, n_nearest)
 
                 else:
@@ -113,38 +104,24 @@ def local_search_min_time(instance, solution, n_nearest):
                     t_2_x = u.drone_tour_time(instance.t_d, copy.deepcopy(new_solution[0][neighbor_pos[0]][neighbor_pos[1]]))
 
                     if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
-                        print("performed swap_x")
-                        print(new_solution[0])
-                        time.sleep(0.05)
                         return local_search_min_time(instance, new_solution, n_nearest)
 
 
-            t_old_truck_tour = u.truck_tour_time(instance.t_t, copy.deepcopy(solution[0][0][i]))
-
             new_solution = u.shift_t(instance, copy.deepcopy(solution), customer, i)
             new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0]))
-            t_new_drone_tour = u.drone_tour_time(instance.t_d, copy.deepcopy(new_solution[0][new_customer_pos[0]][new_customer_pos[1]]))
-            
+                        
             if (u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)) and new_customer_pos[0] != 0):
-                print("performed shift_t")
-                print(new_solution[0])
-                time.sleep(0.05)
                 return local_search_min_time(instance, new_solution, n_nearest)
 
     for i in range(len(solution[0][1])):
 
         for customer in solution[0][1][i]:
             
-            t_old_drone_tour = u.drone_tour_time(instance.t_d, copy.deepcopy(solution[0][1][i]))
             
             new_solution = u.shift_d(instance, copy.deepcopy(solution), customer, i)
             new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0])) #new_customer_pos contiene la pos del customer che è stato spostato dal drone tour al truck tour
-            t_new_truck_tour = u.truck_tour_time(instance.t_t, copy.deepcopy(new_solution[0][new_customer_pos[0]][new_customer_pos[1]]))
-            
+                        
             if (u.total_completion_time(instance, copy.deepcopy(new_solution)) < u.total_completion_time(instance, copy.deepcopy(solution)) and new_customer_pos[0] != 1):
-                print("performed shift_d")
-                print(new_solution[0])
-                time.sleep(0.05)
                 return local_search_min_time(instance, new_solution, n_nearest)
 
     return solution
