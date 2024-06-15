@@ -60,7 +60,8 @@ def max_string_length(truck_tours, L_max):
     average_tour_cardinality = len(get_truck_customers(truck_tours)) / (n_non_empty_truck_tours)
     return min(average_tour_cardinality, L_max)
 
-#this method is taken from Slack Induction by String Removals for Vehicle Routing Problems, Christiaens & Berge
+#this method is taken from "Slack Induction by String Removals for Vehicle Routing Problems, Christiaens & Berge" 
+#to guarantee approximately c_average_removed customers are romoved at each string removal
 def n_strings_to_remove(c_average_removed, l_s_max):
     k_s_max = (4 * c_average_removed) / (1 + l_s_max) - 1
     k_s = int(random.uniform(1, k_s_max + 1))  

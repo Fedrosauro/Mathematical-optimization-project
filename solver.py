@@ -59,7 +59,7 @@ class PDSVRPModel:
         for i in range (1, self.N):
             for j in range (1, self.N):
                 if j != i:
-                    self.model.addConstr(self.u[i] - self.u[j] + self.Q_t * self.x[i, j] <= self.Q_t - self.w[j], "6) Miller-Tucker_Zemlin constraint")
+                    self.model.addConstr(self.u[i] - self.u[j] + self.Q_t * self.x[i, j] <= self.Q_t - self.w[j], "6) Miller-Tucker-Zemlin constraint")
 
         for k in range(self.D):
             self.model.addConstr(gb.quicksum(self.y[j, k] * self.t_d[j] for j in N_f) <= self.T_d, "7) Time constraint for drones")
