@@ -7,15 +7,15 @@ import utilities as u
 
 #test to ensure everything is working 
 
-file_name_instance = "./instances/30-c-0-c.txt" #small instance to test
+file_name_instance = "./instances/small_instances/10-c-0-c.txt" #small instance to test
 instance = instancePDSVRP(file_name_instance)
 
 #model test
-#print("Model")
-#model = PDSVRPModel(instance) 
-#model.build_model()
-#model.solve()
-#model.print_results()
+print("Model")
+model = PDSVRPModel(instance) 
+model.build_model()
+model.solve()
+model.print_results()
 
 #heuristic test
 #print("Heuristic")   
