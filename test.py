@@ -18,16 +18,16 @@ model.solve()
 model.print_results()
 
 #heuristic test
-#print("Heuristic")   
-#params =[0.3, instance.N * 0.15, instance.N * 0.15, 5,1,1,2,2, 0.1, 20, 0.1, 0.999975, 100, 1000, (int)(min(3, 0.1*instance.N)), (int)(0.1*instance.N), 9]
-#start_time = time.time()
-#best_solution = h.SISSRs(instance, *params)
-#end_time = time.time()
-#elapsed_time_heuristic = end_time - start_time
+print("Heuristic")   
+params =[0.3, instance.N * 0.15, instance.N * 0.15, 5,1,1,2,2, 0.1, 20, 0.1, 0.999975, 100, 1000, (int)(min(3, 0.1*instance.N)), (int)(0.1*instance.N), 9]
+start_time = time.time()
+best_solution = h.SISSRs(instance, *params)
+end_time = time.time()
+elapsed_time_heuristic = end_time - start_time
 
-#print("Best solution found:\n", best_solution)
-#print("Solution cost: ", u.cost(instance, best_solution))
-#print("Time required for calculation: ", elapsed_time_heuristic)
+print("Best solution found:\n", best_solution)
+print("Solution cost: ", u.cost(instance, best_solution))
+print("Time required for calculation: ", elapsed_time_heuristic)
 
 #heuristic Min Time test
 print("Heuristic Min Time")   

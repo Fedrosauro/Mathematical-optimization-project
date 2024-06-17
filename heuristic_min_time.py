@@ -77,9 +77,7 @@ def local_search_min_time(instance, solution, n_nearest):
                         t_2_x = u.truck_tour_time(instance.t_t, copy.deepcopy(new_solution[0][neighbor_pos[0]][neighbor_pos[1]]))
                         
                         if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
-    
                             return local_search_min_time(instance, new_solution, n_nearest)
-
 
                     else: 
                         new_solution = u.relocate(instance, copy.deepcopy(solution), customer, neighbor, i)
@@ -106,7 +104,6 @@ def local_search_min_time(instance, solution, n_nearest):
                     if ((t_1_x < t and t_2_x < t) or (t_1_x < t and t_2_x < t)):
                         return local_search_min_time(instance, new_solution, n_nearest)
 
-
             new_solution = u.shift_t(instance, copy.deepcopy(solution), customer, i)
             new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0]))
 
@@ -124,7 +121,6 @@ def local_search_min_time(instance, solution, n_nearest):
     for i in range(len(solution[0][1])):
 
         for customer in solution[0][1][i]:
-            
             
             new_solution = u.shift_d(instance, copy.deepcopy(solution), customer, i)
             new_customer_pos = u.get_position(customer, copy.deepcopy(new_solution[0])) 

@@ -77,7 +77,7 @@ class PDSVRPModel:
         self.model.setParam('Threads', 8) #Set number of threads
         self.model.setParam('MIPFocus', 1)  # Set focus
         self.model.setParam('Presolve', 2)  # Presolve level increase
-        self.model.setParam('Cuts', 3)  # Aggressive cuts
+        self.model.setParam('Cuts', 2)  # Aggressive cuts
         self.model.setParam('TimeLimit', 3600) # Time limit of an hour
 
     def solve(self):
